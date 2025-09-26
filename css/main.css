@@ -1,0 +1,249 @@
+/* Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/*--------------------------Local fonts-------------------------------------------*/
+@font-face {
+  font-family: "Humane";
+  src: url("../fonts/Humane-Bold.woff2") format("woff2"),
+    url("../fonts/Humane-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Humane";
+  src: url("../fonts/Humane-Bold.woff2") format("woff2"),
+    url("../fonts/Humane-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/*-------------------------Navigation-------------------------*/
+nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 1rem 2rem;
+  z-index: 1000;
+}
+
+/* Lay items side-by-side with no gap; we'll insert the "/" via CSS */
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0; /* remove spacing; separator handles it */
+  align-items: center;
+}
+
+/* Add the slash only between items */
+nav ul li + li::before {
+  content: " ";
+  display: inline-block;
+  margin: 0 0.5rem; /* controls space around the slash */
+  color: #FF8C69;
+  opacity: 0.8;
+}
+ 
+/* Links */
+nav ul li a {
+  position: relative;
+  text-decoration: none;
+  color: #FF8C69;
+  padding-bottom: 2px; /* space for underline */
+
+  transition: none;
+}
+
+/* Sliding underline on hover/focus */
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease; /* controls slide speed */
+}
+
+nav ul li a:hover::after,
+nav ul li a:focus-visible::after {
+  transform: scaleX(1);
+}
+ 
+/*------------------------------Body-----------------------------*/
+body {
+  background-color: #0a2f26;
+  color: #FF8C69;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+  font-family: "Bebas Neue", sans-serif;
+  padding: 0 10;
+}
+
+/* Header */
+/* Header */
+header {
+  display: grid;
+  place-content: center;
+  height: 100vh; /* Always full screen height */
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Main Heading */
+h1 {
+  font-size: 25rem;
+  font-family: "Humane", sans-serif;
+}
+.Heading{
+    display: flex;
+    display: block;
+}
+
+/* Loader Styling */
+.loader {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  font-size: clamp(2rem, 6vw, 7rem); /*Min size ,Growth rate,Max size */
+  color: #FF8C69;
+}
+#loading-centered {
+  font-size: 5rem;  
+}
+
+/* Cursor follower (make sure it doesn't break layout) */
+
+.follower {
+    position: absolute;
+    width: 30px;                   /* Diameter of the outer circle */
+    height: 30px;
+    border: 1px solid #FF8C69;     /* Border color for outer circle */
+    border-radius: 50%;            /* Make it circular */
+    pointer-events: none;          /* Allow pointer events to pass through */
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;      
+    transition: width 0.3s ease, height 0.3s ease           /* Ensure it's always in front */
+}
+
+
+/* Inner circle with a fill color */
+.inner-circle {
+    width: 6px;                    /* Smaller diameter for inner circle */
+    height: 6px;
+    background-color: #FF8C69;     /* Fill color for inner circle */
+    border-radius: 50%;            /* Make it circular */
+    position: absolute;            /* Position it absolutely within .follower */
+    top: 50%;                      /* Center within outer circle */
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;                 /* Ensure inner circle stays on top */
+}
+.outer-circle {
+    position: absolute;
+    width: 310px; /* Slightly larger than the image */
+    height: 310px;
+    border: 1px solid #FF8C69; /* Stroke color */
+    border-radius: 50%; /* Makes it a circular stroke */
+    z-index: 0; /* Keeps outer circle below the profile image */
+}
+/*-----------------------------ANIMATIONS-------------------------------------*/
+
+.drag-down {
+  animation: slideUp 0.7s ease forwards;
+}
+/* Fade-in animation for home page content */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px); /* Start slightly below the final position */
+  animation: fadeInUp 1s ease forwards; /* Adjust duration as needed */
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes slideUp {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+/*------------------------------------Responsiveness--------------------------------*/
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  .loader {
+    font-size: 3rem;
+    bottom: 0.5rem;
+    right: 0.5rem;
+  }
+   
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  .loader {
+    font-size: 2rem;
+  }
+}
+/* --- Responsive Navbar --- */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: #FF8C69;
+  cursor: pointer;
+}
+
+/* Hide menu on small screens by default */
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background-color: #0a2f26;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    padding: 1rem;
+    border: 1px solid #FF8C69;
+    border-radius: 10px;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+}
